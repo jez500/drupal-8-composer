@@ -21,7 +21,8 @@ echo "---> Building application from source..."
 pushd /code
 if [ -f composer.json ]; then
     echo "---> Installing composer dependencies..."
-    composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader
+    ls -al
+    composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader -d /code
     # Remove all .git directories to save space.
     find . -name .git -type d -exec rm -rf {} +
 fi

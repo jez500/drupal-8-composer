@@ -1,4 +1,4 @@
-FROM lakshminp/drupal-openshift-base:1.0
+FROM jez500/openshift-drupal-php:1.0
 
 # COPY --chown=1001:0 . /code/
 # Above command won't work on older docker versions.

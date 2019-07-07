@@ -1,27 +1,27 @@
 #!/bin/bash
 
 #source ${PHP_CONTAINER_SCRIPTS_PATH}/common.sh
-#
+
 #export_vars=$(cgroup-limits); export $export_vars
-#export DOCUMENTROOT=${DOCUMENTROOT:-/}
-#
-## Default php.ini configuration values, all taken
-## from php defaults.
-#export ERROR_REPORTING=${ERROR_REPORTING:-E_ALL & ~E_NOTICE}
-#export DISPLAY_ERRORS=${DISPLAY_ERRORS:-ON}
-#export DISPLAY_STARTUP_ERRORS=${DISPLAY_STARTUP_ERRORS:-OFF}
-#export TRACK_ERRORS=${TRACK_ERRORS:-OFF}
-#export HTML_ERRORS=${HTML_ERRORS:-ON}
-#export INCLUDE_PATH=${INCLUDE_PATH:-.:/opt/app-root/src:${PHP_DEFAULT_INCLUDE_PATH}}
-#export PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-128M}
-#export SESSION_NAME=${SESSION_NAME:-PHPSESSID}
-#export SESSION_HANDLER=${SESSION_HANDLER:-files}
-#export SESSION_PATH=${SESSION_PATH:-/tmp/sessions}
-#export SESSION_COOKIE_DOMAIN=${SESSION_COOKIE_DOMAIN:-}
-#export SESSION_COOKIE_HTTPONLY=${SESSION_COOKIE_HTTPONLY:-}
-#export SESSION_COOKIE_SECURE=${SESSION_COOKIE_SECURE:-0}
-#export SHORT_OPEN_TAG=${SHORT_OPEN_TAG:-OFF}
-#
+export DOCUMENTROOT=${DOCUMENTROOT:-/}
+
+# Default php.ini configuration values, all taken
+# from php defaults.
+export ERROR_REPORTING=${ERROR_REPORTING:-E_ALL & ~E_NOTICE}
+export DISPLAY_ERRORS=${DISPLAY_ERRORS:-ON}
+export DISPLAY_STARTUP_ERRORS=${DISPLAY_STARTUP_ERRORS:-OFF}
+export TRACK_ERRORS=${TRACK_ERRORS:-OFF}
+export HTML_ERRORS=${HTML_ERRORS:-ON}
+export INCLUDE_PATH=${INCLUDE_PATH:-.:/opt/app-root/src:${PHP_DEFAULT_INCLUDE_PATH}}
+export PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-256M}
+export SESSION_NAME=${SESSION_NAME:-PHPSESSID}
+export SESSION_HANDLER=${SESSION_HANDLER:-files}
+export SESSION_PATH=${SESSION_PATH:-/tmp/sessions}
+export SESSION_COOKIE_DOMAIN=${SESSION_COOKIE_DOMAIN:-}
+export SESSION_COOKIE_HTTPONLY=${SESSION_COOKIE_HTTPONLY:-}
+export SESSION_COOKIE_SECURE=${SESSION_COOKIE_SECURE:-0}
+export SHORT_OPEN_TAG=${SHORT_OPEN_TAG:-OFF}
+
 ## TODO should be dynamically calculated based on container memory limit/16
 #export OPCACHE_MEMORY_CONSUMPTION=${OPCACHE_MEMORY_CONSUMPTION:-128}
 #
@@ -54,8 +54,6 @@
 ## pre-start files
 #process_extending_files ${APP_DATA}/php-pre-start/ ${PHP_CONTAINER_SCRIPTS_PATH}/pre-start/
 #
-pwd
-ls -al /shared
-whoami
-chown -R 1000190000:1000190000 /shared
+
+# Finish with running php-fpm in foreground
 exec php-fpm -F -R

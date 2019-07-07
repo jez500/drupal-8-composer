@@ -54,4 +54,8 @@
 ## pre-start files
 #process_extending_files ${APP_DATA}/php-pre-start/ ${PHP_CONTAINER_SCRIPTS_PATH}/pre-start/
 #
-exec nginx -g 'daemon off;'
+pwd
+ls -al /shared
+whoami
+chown -R 1000190000:1000190000 /shared
+exec php-fpm -F -R

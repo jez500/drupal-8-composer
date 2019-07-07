@@ -1,3 +1,5 @@
-#!/bin/bash -e
+#!/bin/sh
 
-#mv /code /tmp/artifacts
+pushd ${HOME} >/dev/null
+tar cf - vendor
+popd >/dev/null

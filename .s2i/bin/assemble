@@ -1,29 +1,34 @@
-#!/bin/bash -e
-if [[ "$1" == "-h" ]]; then
-    exec /usr/libexec/s2i/usage
-fi
+#!/bin/bash
+
+set -e
 
 echo "Custom s2i script"
 
+shopt -s dotglob
 
-# Restore artifacts from the previous build (if they exist).
-if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
-  echo "---> Restoring build artifacts..."
-  mv /tmp/artifacts/* /code/
-fi
-
-# Copy over cloned source code.
-echo "---> Installing application source..."
-cp -Rf /tmp/src/. /code/
-
-echo "---> Building application from source..."
-
+echo "=> Installing application source..."
 pushd /code
+rm -rf ./* && mv /tmp/src/* ./
+
 if [ -f composer.json ]; then
-    echo "---> Installing composer dependencies..."
-    ls -al
-    composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader -d /code
-    # Remove all .git directories to save space.
-    find . -name .git -type d -exec rm -rf {} +
+    echo "=> Found 'composer.json'"
+
+    if [ -d /tmp/artifacts ] && [ "$(ls -a /tmp/artifacts/ 2>/dev/null)" ]; then
+        echo "=> Restoring build artifacts"
+        mv /tmp/artifacts/* $HOME/
+    fi
+
+    # Install App dependencies using Composer
+    echo "=> Running Composer install"
+    echo "   composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader"
+    composer install --no-dev --prefer-dist --no-interaction --no-ansi --optimize-autoloader
 fi
+
+# Remove all .git directories to save space.
+echo "=> Remove Git artifacts"
+find . -name .git -type d -exec rm -rf {} +
 popd
+
+# Fix source directory permissions
+echo "=> Fix permissions"
+# fix-permissions ./

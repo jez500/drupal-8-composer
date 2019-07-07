@@ -2,6 +2,10 @@
 
 set -e
 
+ARTIFACTS="/tmp/artifacts"
+FOUND_ARTIFACTS="$(ls -A $ARTIFACTS 2> /dev/null)"
+SRC="/tmp/src"
+
 echo "Custom s2i script"
 
 shopt -s dotglob
@@ -13,9 +17,10 @@ rm -rf ./* && mv /tmp/src/* ./
 if [ -f composer.json ]; then
     echo "=> Found 'composer.json'"
 
-    if [ -d /tmp/artifacts ] && [ "$(ls -a /tmp/artifacts/ 2>/dev/null)" ]; then
+    if [ ! -z $FOUND_ARTIFACTS ]; then
         echo "=> Restoring build artifacts"
-        mv /tmp/artifacts/* $HOME/
+        ls -al "$ARTIFACTS"
+        mv "$ARTIFACTS"/* $HOME/
     fi
 
     # Install App dependencies using Composer

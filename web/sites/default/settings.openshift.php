@@ -11,3 +11,7 @@ $databases['default']['default'] = array (
    'collation' => 'utf8mb4_general_ci',
 );
 $settings['hash_salt'] = json_encode($databases);
+
+// Breaks with aggregation in nginx. Find a fix or use apache then remove this.
+$config['system.performance']['css']['preprocess'] = FALSE;
+$config['system.performance']['js']['preprocess'] = FALSE;
